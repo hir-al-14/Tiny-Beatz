@@ -1,0 +1,20 @@
+# Streamlit - Main framework
+streamlit
+
+# ML & NLP
+transformers
+torch
+sentence-transformers
+
+# Vector Database
+chromadb
+
+# Spotify API
+spotipy
+
+# Data Processing
+pandas
+datasets
+
+# Utilities
+python-dotenv
