@@ -5,6 +5,9 @@ load_dotenv()
 
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
+SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "http://localhost:8501")
+
+SPOTIFY_SCOPE = "user-read-playback-state user-modify-playback-state streaming"
 
 EMOTION_TO_MUSIC = {
     'joy': {'genres': ['happy', 'pop', 'dance'], 'valence': (0.6, 1.0), 'energy': (0.6, 1.0)},

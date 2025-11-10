@@ -31,10 +31,18 @@ def apply_custom_css():
             width: 100%;
             height: 40px;
         }
+        .spotify-auth-btn {
+            background-color: #1DB954;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
     </style>
     """, unsafe_allow_html=True)
 
-def create_audio_player(track, index):
+def create_audio_player(track, index, sp):
     track_id = f"track_{index}"
     
     st.markdown(f"""
@@ -51,51 +59,71 @@ def create_audio_player(track, index):
             st.image(track['album_image'], width=120)
     
     with col2:
-        if track['preview_url']:
-            st.audio(track['preview_url'], format='audio/mp3')
-            st.caption("30-second preview")
-        else:
-            st.info("Preview not available for this track")
-            st.caption("This song doesn't have a preview, but you can listen on Spotify")
-        
         duration_min = track['duration_ms'] // 60000
         duration_sec = (track['duration_ms'] % 60000) // 1000
         st.caption(f"Duration: {duration_min}:{duration_sec:02d}")
+        
+        play_col, pause_col = st.columns(2)
+        
+        with play_col:
+            if st.button(f"Play Full Track", key=f"play_{track_id}", use_container_width=True):
+                from spotify_client import play_track
+                if play_track(sp, track['uri']):
+                    st.success("Playing on your Spotify device")
+                else:
+                    st.warning("No active Spotify device found. Open Spotify on your device first")
+        
+        with pause_col:
+            if st.button(f"Pause", key=f"pause_{track_id}", use_container_width=True):
+                from spotify_client import pause_playback
+                if pause_playback(sp):
+                    st.success("Paused")
+        
+        if track['preview_url']:
+            with st.expander("Play 30s Preview"):
+                st.audio(track['preview_url'], format='audio/mp3')
     
     with col3:
         st.link_button("Open in Spotify", track['spotify_url'], use_container_width=True)
-        
-        if st.button(f"Add to Queue", key=f"queue_{track_id}", use_container_width=True):
-            st.success(f"'{track['name']}' would be added to your queue")
-            st.info("To actually add to queue, open the song in Spotify")
 
-def render_sidebar(sp, classifier):
+def render_sidebar(sp):
     with st.sidebar:
         st.title("Spotify Connection")
         
-        if st.button("Test Spotify API"):
-            with st.spinner("Testing connection..."):
-                try:
-                    if sp is None:
-                        st.error("No credentials found in .env file")
-                    else:
-                        st.success("Connected to Spotify successfully")
-                        
-                except Exception as e:
-                    st.error(f"Connection failed: {str(e)}")
+        if sp:
+            st.success("Connected to Spotify")
+            
+            try:
+                user = sp.current_user()
+                st.info(f"Logged in as: {user['display_name']}")
+            except:
+                pass
+            
+            if st.button("Disconnect"):
+                if 'token_info' in st.session_state:
+                    del st.session_state.token_info
+                st.rerun()
+        else:
+            st.warning("Not connected to Spotify")
+            st.markdown("To play full tracks, connect your Spotify account")
+            
+            from spotify_client import get_auth_url
+            auth_url = get_auth_url()
+            st.link_button("Connect Spotify Account", auth_url, use_container_width=True)
         
         st.divider()
         
         st.markdown("**AI Model Status:**")
-        try:
-            st.success("GoEmotions model loaded")
-        except Exception as e:
-            st.error(f"Model error: {str(e)}")
+        st.success("GoEmotions model loaded")
         
         st.divider()
         
-        st.markdown("**Credentials Status:**")
-        if st.session_state.get('spotify_ready'):
-            st.info("Spotify credentials loaded")
+        st.markdown("**Features:**")
+        if sp:
+            st.markdown("- Full track playback")
+            st.markdown("- Play/Pause controls")
+            st.markdown("- Queue management")
         else:
-            st.warning("No Spotify credentials found")
+            st.markdown("- Emotion detection")
+            st.markdown("- Song recommendations")
+            st.markdown("- 30-second previews")
