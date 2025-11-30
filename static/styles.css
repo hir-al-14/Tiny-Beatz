@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&display=swap');
+
+* {
+    font-family: "Baloo 2", sans-serif;
+}
+
+/* Page background */
+.stApp {
+    background: radial-gradient(circle at 10% 0%,
+                #6a46ff 0,
+                #2b1653 35%,
+                #1a0e2d 55%,
+                #1f1428 75%,
+                #8a664a 100%);
+    background-attachment: fixed;
+    color: #ffffff;
+}
+
+/* Remove Streamlit default UI chrome */
+#MainMenu, header, footer {
+    visibility: hidden;
+}
+
+/* TinyBeatz title top-left corner*/
+.tiny-title {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #ffb55a;
+    text-shadow: 0 0 12px rgba(0,0,0,0.6);
+    z-index: 9999;
+}
+
+/* Center logo */
+.center-logo {
+    padding-top: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 500;
+}
+.center-logo img {
+    width: 180px;
+    filter: drop-shadow(0 0 24px rgba(0,0,0,0.6));
+}
+
+/* Stroke Lines Behind Logo */
+.staff-lines {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    width: min(1100px, 90%);
+    height: 260px;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+}
+.staff-line {
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    height: 220px;
+    border-top: 2px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+}
+.staff-1 { top: 68%; }
+.staff-2 { top: 78%; }
+.staff-3 { top: 88%; }
+.staff-4 { top: 98%; }
+.staff-5 { top: 108%; }
+.staff-6 { top: 118%; }
+.staff-7 { top: 128%; }
+.staff-8 { top: 138%; }
+
+
+/* Colorful music notes on the strokes */
+.music-note {
+    position: absolute;
+    font-size: 2.4rem;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    filter: drop-shadow(0 0 6px rgba(0,0,0,0.65));
+}
+
+/* Chat Title */
+.chat-title {
+    margin-top: 320px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+/* Chat Input */
+.chat-input {
+    width: min(520px, 90%);
+    margin: 12px auto 0 auto;
+}
+
+.chat-input > div > div {
+    border-radius: 999px !important;
+    padding: 2px !important;
+    background: rgba(255,255,255,0.12) !important;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.4);
+}
+
+.chat-input input {
+    border-radius: 999px !important;
+    padding: 0.9rem 1.5rem !important;
+    background: transparent !important;
+    border: none !important;
+    color: white !important;
+    font-size: 1rem;
+}
+
+.chat-input input::placeholder {
+    color: rgba(255,255,255,0.8);
+}
+
+.chat-input label {
+    display: none !important;
+}
+
+.results-section {
+    margin-top: 340px;
+}
+.results-title{
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+
+/* Track cards (song results) */
+.track-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.track-card {
+    background: rgba(10, 4, 24, 0.85);
+    border-radius: 24px;
+    padding: 18px 22px;
+    margin: 10px auto 0 auto;
+    width: min(420px, 90%);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+}
+
+.track-inner {
+    text-align: center;
+}
+
+.track-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
+.track-artist {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 12px;
+}
+
+.track-button {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #2b1653;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.track-button:hover {
+    text-decoration: none;
+    filter: brightness(0.97);
+}
+
